@@ -723,15 +723,13 @@ impl Pool {
         }
 
         if self.query_parser_read_write_splitting && !self.query_parser_enabled {
-            error!(
+            warn!(
                 "query_parser_read_write_splitting is only valid when query_parser_enabled is true"
             );
-            return Err(Error::BadConfig);
         }
 
         if self.plugins.is_some() && !self.query_parser_enabled {
-            error!("plugins are only valid when query_parser_enabled is true");
-            return Err(Error::BadConfig);
+            warn!("plugins are only valid when query_parser_enabled is true");
         }
 
         self.automatic_sharding_key = match &self.automatic_sharding_key {
